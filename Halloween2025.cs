@@ -20,6 +20,10 @@ public class Halloween2025 : BloonsTD6Mod
     {
         if (tower.towerModel.name.StartsWith(IDPrefix))
         {
+            if (tower.GetUnityDisplayNode() == null)
+            {
+                return;
+            }
             tower.GetUnityDisplayNode().GetMeshRenderer().materials[1].SetInt("_Highlighted", 0);
         }
     }
