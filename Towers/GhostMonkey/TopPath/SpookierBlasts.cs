@@ -20,11 +20,14 @@ public class SpookierBlasts : ModUpgrade<GhostMonkey>
     {
         var weapon = towerModel.GetWeapon();
         var projectile = weapon.projectile;
-        projectile.pierce += 2;
         weapon.rate *= 0.9f;
+        projectile.GetBehavior<SlowModel>().multiplier = 0.5f;
+        
+        TrackTargetModel travelModel = new TrackTargetModel("TrackTargetModel_", 100, true, false, 270, false, 300, true, true);
+        projectile.AddBehavior(travelModel);
     }
 
-    public override string Description => "Soul bolts now spook bloons slowing them down for a short amount of time. All Soul bolts from any ghost monkey do more damage to spooked bloons.";
+    public override string Description => "Soul bolts slow bloons down 33% more. They now also follow their target.";
 
     public override int Path => Top;
     public override int Tier => 2;
