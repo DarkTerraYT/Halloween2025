@@ -12,6 +12,14 @@
     <ItemGroup>
         <Content Include=".github\workflows\build.yml" />
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\BloonsTD6Mods\MelonLoader\Il2CppAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Assets\Towers\PlagueDoctor\" />
+    </ItemGroup>
 
     <Import Project="..\btd6.targets" />
 </Project>

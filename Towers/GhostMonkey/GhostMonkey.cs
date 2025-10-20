@@ -29,6 +29,7 @@ public class GhostMonkey : ModTower<HalloweenTowers>
         towerModel.GetAttackModel().attackThroughWalls = true;
 
         weapon.rate = 2;
+        weapon.name = "Ghost";
 
         projectile.pierce = 5;
         projectile.ignoreBlockers = true;
@@ -40,6 +41,9 @@ public class GhostMonkey : ModTower<HalloweenTowers>
         var damageModiferForStateModel =
             new DamageModifierForBloonStateModel("DamageModifierForBloonStateModel_Spooked", "Spooked", 1.25f, 1, false, true, false);
         projectile.AddBehavior(damageModiferForStateModel);
+        var damageModiferForStateModel2 =
+            new DamageModifierForBloonStateModel("DamageModifierForBloonStateModel_Spooked2", "Spooked2",2, 3, false, true, false);
+        projectile.AddBehavior(damageModiferForStateModel2);
         
         projectile.ApplyDisplay<GhostBolt>();
 
@@ -54,4 +58,7 @@ public class GhostMonkey : ModTower<HalloweenTowers>
     public override string BaseTower => "DartMonkey";
     public override int Cost => 700;
     public override string Icon => Portrait;
+
+    public override bool IsValidCrosspath(int[] tiers) =>
+        ModHelper.HasMod("UltimateCrosspathing") || base.IsValidCrosspath(tiers);
 }
