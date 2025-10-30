@@ -84,7 +84,7 @@ public class Jiangshi : ModUpgrade<GhostMonkey>
 
         var linkRadiusToRange =
             new LinkProjectileRadiusToTowerRangeModel("LinkProjectileRadiusToTowerRangeModel_Jiangshi",
-                weapon.projectile, 45, 0, 1);
+                weapon.projectile, 47, 6, 1);
         towerModel.AddBehavior(linkRadiusToRange);
         towerModel.GetAttackModel().AddWeapon(weapon);
     }

@@ -25,8 +25,11 @@ public class Retribution : ModUpgrade<GhostMonkey>
         var weapon = towerModel.GetWeapon();
         var projectile = weapon.projectile;
         
+        projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.AddBehavior(projectile.GetBehavior<CreateProjectileOnContactModel>().Duplicate());
+        projectile.GetBehavior<CreateProjectileOnContactModel>().projectile
+            .GetBehavior<CreateProjectileOnContactModel>().projectile.name = "BloonSoul_DoubleDamage";
     }
-    public override string Description => "Bloons hit by the spectre release their soul, their strength tied to the strength of the bloon. If bloon is lesser than a moab, the removal of this soul instapops them.";
+    public override string Description => "Bloon souls can spawn more bloon souls after hitting a bloon, and these souls do double damage.";
 
     public override int Path => Bottom;
     public override int Tier => 5;

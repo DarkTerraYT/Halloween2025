@@ -27,6 +27,14 @@ public class Jiangshi : ModTowerCustomDisplay<GhostMonkey>
 
     public override string AssetBundleName => "halloween2025";
     public override string PrefabName => Name;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        foreach (var renderer in node.GetMeshRenderers())
+        {
+            renderer.ApplyOutlineShader();
+        }
+    }
 }
 public class Jiangshi2 : ModTowerCustomDisplay<GhostMonkey>
 {
@@ -34,6 +42,14 @@ public class Jiangshi2 : ModTowerCustomDisplay<GhostMonkey>
 
     public override string AssetBundleName => "halloween2025";
     public override string PrefabName => Name;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        foreach (var renderer in node.GetMeshRenderers())
+        {
+            renderer.ApplyOutlineShader();
+        }
+    }
 }
 public class Jiangshi3 : ModTowerCustomDisplay<GhostMonkey>
 {
@@ -41,6 +57,14 @@ public class Jiangshi3 : ModTowerCustomDisplay<GhostMonkey>
 
     public override string AssetBundleName => "halloween2025";
     public override string PrefabName => Name;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        foreach (var renderer in node.GetMeshRenderers())
+        {
+            renderer.ApplyOutlineShader();
+        }
+    }
 }
 
 public class Banshee : ModTowerCustomDisplay<GhostMonkey>
@@ -109,8 +133,12 @@ public class BloonSoul : ModDisplay
     public override void ModifyDisplayNode(UnityDisplayNode node)
     {
         Set2DTexture(node, Name);
-        Object.Instantiate(AssetHelper.GetObject("SpectreEffect"), node.transform);
     }
+}
+public class MoabBloonSoul : ModCustomDisplay
+{
+    public override string AssetBundleName => "halloween2025";
+    public override string PrefabName => Name;
 }
 
 public class JiangshiAura : ModDisplay2D
@@ -131,4 +159,9 @@ public class SonicWaves : ModCustomDisplay
 {
     public override string AssetBundleName => "halloween2025";
     public override string PrefabName => "ScreamEffect";
+}
+public class SuperScreamEffect : ModCustomDisplay
+{
+    public override string AssetBundleName => "halloween2025";
+    public override string PrefabName => "SuperScreamEffect";
 }

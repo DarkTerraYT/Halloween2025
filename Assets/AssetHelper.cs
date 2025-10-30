@@ -12,6 +12,16 @@ internal static class AssetHelper
         return Get<GameObject>(name);
     }
 
+    public static Shader GetShader(string name)
+    {
+        return Get<Shader>(name);
+    }
+    
+    public static Material GetMaterial(string name)
+    {
+        return Get<Material>(name);
+    }
+
     public static void PrepareAssetBundle()
     {
         if (!bundle)
@@ -20,9 +30,14 @@ internal static class AssetHelper
         }
     }
     
-    public static T Get<T>(string name) where T : Il2CppSystem.Object 
+    public static T Get<T>(string name) where T : Object 
     {
         PrepareAssetBundle();
         return bundle.LoadAssetAsync<T>(name).asset.Cast<T>();
+    }
+    public static Object Get(string name)
+    {
+        PrepareAssetBundle();
+        return bundle.LoadAssetAsync(name).asset;
     }
 }

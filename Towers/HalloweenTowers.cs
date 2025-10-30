@@ -2,9 +2,11 @@
 
 namespace Halloween2025.Towers;
 
-public class HalloweenTowers : ModTowerSet
+/* REMOVED AS THERE WERE ORIGINALLY GOING TO BE THREE TOWERS BUT NOW THERE'S ONLY ONE*/
+
+/*public class HalloweenTowers : ModTowerSet
 {
     public override string Container => "TowerContainerHalloween";
     public override string ContainerLarge => "TowerContainerHalloweenLarge";
     public override string Portrait => "PortraitContainerHalloween";
-}
+}*/
