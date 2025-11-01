@@ -49,8 +49,11 @@ public class Salvation : ModUpgrade<GhostMonkey>
         
         public static bool Prefix(CreateProjectileOnContact __instance, Bloon bloon)
         {
-            if (!__instance.projectile.projectileModel.id.StartsWith("h25_salvation_") ||
-                ModifiedBloons.Contains(bloon.Id))
+            if (!__instance.projectile.projectileModel.id.StartsWith("h25_salvation_"))
+            {
+                return true;
+            }
+            if (ModifiedBloons.Contains(bloon.Id))
             {
                 return false;
             }
