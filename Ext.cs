@@ -13,7 +13,7 @@ public static class Ext
 {
     private const string DefaultShader = "NinjaKiwi/SimpleUnlitOutline";
     private static readonly int OutlineColor = Shader.PropertyToID("_OutlineColor");
-    
+
     public static void ApplyOutlineShader(this Material material)
     {
         var shader = Resources.FindObjectsOfTypeAll<Shader>().FirstOrDefault(shader => shader.name == DefaultShader);
@@ -28,7 +28,7 @@ public static class Ext
             material.shader = shader;
         }
     }
-    
+
     public static void SetOutlineColor(this Material material, Color color)
     {
         material.SetColor(OutlineColor, color);

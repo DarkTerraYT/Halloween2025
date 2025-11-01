@@ -8,6 +8,13 @@ namespace Halloween2025.Towers.GhostMonkey.BottomPath;
 
 public class DualBlasts : ModUpgrade<GhostMonkey>
 {
+    public override string Description =>
+        "Ghost monkey shoots out twice the bolts! \"No, the bolts aren't dueling.\" If Ghost Monkey is a Banshee or Jiangshi, attacks twice in a burst attack";
+
+    public override int Path => Bottom;
+    public override int Tier => 1;
+    public override int Cost => 415;
+
     public override void ApplyUpgrade(TowerModel towerModel)
     {
         var weapon = towerModel.GetWeapon();
@@ -22,10 +29,4 @@ public class DualBlasts : ModUpgrade<GhostMonkey>
             weapon.AddBehavior(burst);
         }
     }
-
-    public override string Description => "Ghost monkey shoots out twice the bolts! \"No, the bolts aren't dueling.\" If Ghost Monkey is a Banshee or Jiangshi, attacks twice in a burst attack";
-
-    public override int Path => Bottom;
-    public override int Tier => 1;
-    public override int Cost => 415;
 }

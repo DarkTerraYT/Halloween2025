@@ -12,21 +12,33 @@ using Il2CppAssets.Scripts.Models.Towers.Projectiles;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Unity.Display;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppNinjaKiwi.Common.ResourceUtils;
 using UnityEngine;
 
 namespace Halloween2025.Towers.GhostMonkey.MiddlePath;
 
 public class LifeDrain : ModUpgrade<GhostMonkey>
 {
+    public override string Description =>
+        "Jiangshi drains 50% extra health from the bloons. Affected bloons drain life quickly after getting hit.";
+
+    public override int Path => Top;
+    public override int Tier => 4;
+    public override int Cost => 3500;
+
     public override void ApplyUpgrade(TowerModel towerModel)
     {
         var weapon = towerModel.GetWeapons().Find(w => w.name == "Jiangshi")!;
         var projectile = weapon.projectile;
 
         projectile.GetDamageModel().damage *= 1.5f;
-        
-        var addBehaviors = new AddBehaviorToBloonModel("AddBehaviorToBloonModel_", "lifedrain", 10, 99999, null, null, new Il2CppReferenceArray<BloonBehaviorModel>(0), "", false, true, false, false, 0, true, 1, projectile.GetDamageModel(), false, 100, true);
-        var dot = new DamageOverTimeModel("DamageOverTimeModel_", 1f, 0.1f, BloonProperties.None, BloonProperties.None, new(""), 10, false, ObjectId.FromData(0), false, 0, false, false, true, new Il2CppReferenceArray<DamageModifierModel>(0), false);
+
+        var addBehaviors = new AddBehaviorToBloonModel("AddBehaviorToBloonModel_", "lifedrain", 10, 99999, null, null,
+            new Il2CppReferenceArray<BloonBehaviorModel>(0), "", false, true, false, false, 0, true, 1,
+            projectile.GetDamageModel(), false, 100, true);
+        var dot = new DamageOverTimeModel("DamageOverTimeModel_", 1f, 0.1f, BloonProperties.None, BloonProperties.None,
+            new PrefabReference(""), 10, false, ObjectId.FromData(0), false, 0, false, false, true,
+            new Il2CppReferenceArray<DamageModifierModel>(0), false);
         addBehaviors.AddBehavior(dot);
         addBehaviors.ApplyOverlay<LifeDrainEffect>();
         projectile.AddBehavior(addBehaviors);
@@ -53,10 +65,4 @@ public class LifeDrain : ModUpgrade<GhostMonkey>
             particles.transform.localPosition = Vector3.zero;
         }
     }
-
-    public override string Description => "Jiangshi drains 50% extra health from the bloons. Affected bloons drain life quickly after getting hit.";
-
-    public override int Path => Top;
-    public override int Tier => 4;
-    public override int Cost => 3500;
 }

@@ -10,13 +10,13 @@
         <DebugType>embedded</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <Content Include=".github\workflows\build.yml" />
+        <Content Include=".github\workflows\build.yml"/>
     </ItemGroup>
     <ItemGroup>
-      <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\BloonsTD6Mods\MelonLoader\Il2CppAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
-      </Reference>
+        <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+            <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\BloonsTD6Mods\MelonLoader\Il2CppAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
-    <Import Project="..\btd6.targets" />
+    <Import Project="..\btd6.targets"/>
 </Project>

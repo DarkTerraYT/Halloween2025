@@ -5,29 +5,31 @@ using BTD_Mod_Helper.Extensions;
 using Halloween2025.Assets.Towers;
 using HarmonyLib;
 using Il2CppAssets.Scripts.Models.Audio;
-using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Effects;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
-using Il2CppAssets.Scripts.Models.Towers.Behaviors.Emissions;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
-using Il2CppAssets.Scripts.Models.Towers.Weapons;
 using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
-using MelonLoader.Utils;
 using UnityEngine;
 
 namespace Halloween2025.Towers.GhostMonkey.MiddlePath;
 
 public class Jiangshi : ModUpgrade<GhostMonkey>
 {
+    public override string Description =>
+        "Ghost monkey becomes a Jiangshi, damaging all bloons around it, gaining a life every 100 bloons popped by Jiangsu. \"Though, I suppose a Jiangshi is more so a ghoul...\"";
+
+    public override int Path => Top;
+    public override int Tier => 3;
+    public override int Cost => 1500;
+
     public override void ApplyUpgrade(TowerModel towerModel)
     {
         var orbit = Game.instance.model.GetTower(TowerType.BoomerangMonkey, 5).GetBehavior<OrbitModel>().Duplicate();
@@ -43,9 +45,7 @@ public class Jiangshi : ModUpgrade<GhostMonkey>
 
         var weapon = towerModel.GetWeapon();
         if (towerModel.tiers[Middle] < 3 && towerModel.tiers[Bottom] < 3)
-        {
             towerModel.GetAttackModel().RemoveWeapon(weapon);
-        }
 
         weapon = Game.instance.model.GetTower(TowerType.MonkeySub, 4).GetBehavior<SubmergeModel>().submergeAttackModel
             .Cast<AttackModel>().weapons[1].Duplicate()!;
@@ -54,13 +54,13 @@ public class Jiangshi : ModUpgrade<GhostMonkey>
         weapon.fireWithoutTarget = true;
 
         weapon.rate = 1.5f;
-        
+
         weapon.projectile.RemoveBehavior<AddTagToBloonModel>();
         var addTag = new AddTagToBloonModel("AddTagToBloonModel_", "Jiangshi", 0.5f, "Jiangshi", 99999, true, "");
         addTag.ApplyOverlay<LifeStealOverlay>();
         weapon.projectile.AddBehavior(addTag);
         weapon.projectile.UpdateCollisionPassList();
-        
+
         //weapon.projectile.ApplyDisplay<Lifesteal>();
         weapon.projectile.display = new PrefabReference("");
         weapon.projectile.pierce = 99999999999;
@@ -92,32 +92,29 @@ public class Jiangshi : ModUpgrade<GhostMonkey>
     public class LifeStealOverlay : ModBloonOverlay
     {
         public override string BaseOverlay => "MonkeySubRadiation";
-        
+
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
-            node.GetRenderer<SpriteRenderer>().material.color = new(3, 0,0);
+            node.GetRenderer<SpriteRenderer>().material.color = new Color(3, 0, 0);
         }
     }
 
     [HarmonyPatch(typeof(Bloon), nameof(Bloon.DestroyBloon))]
     private static class Bloon_DestroyBloon
     {
-        private static float bloonsPopped = 0;
-        
+        private static float bloonsPopped;
+
         public static void Postfix(Projectile projectile, float amount)
         {
             var model = projectile.projectileModel;
-            if (!model.id.StartsWith("h25lifesteal_"))
-            {
-                return;
-            }
+            if (!model.id.StartsWith("h25lifesteal_")) return;
 
-            float multiplier = float.Parse(model.id.Split('_')[^1]);
+            var multiplier = float.Parse(model.id.Split('_')[^1]);
             bloonsPopped += multiplier * amount;
-            int livesToGain = 0;
-            
+            var livesToGain = 0;
+
             ModHelper.Log<Halloween2025>(bloonsPopped);
-            
+
             while (bloonsPopped >= 100)
             {
                 bloonsPopped -= 100;
@@ -131,10 +128,4 @@ public class Jiangshi : ModUpgrade<GhostMonkey>
             }
         }
     }
-
-    public override string Description => "Ghost monkey becomes a Jiangshi, damaging all bloons around it, gaining a life every 100 bloons popped by Jiangsu. \"Though, I suppose a Jiangshi is more so a ghoul...\"";
-
-    public override int Path => Top;
-    public override int Tier => 3;
-    public override int Cost => 1500;
 }

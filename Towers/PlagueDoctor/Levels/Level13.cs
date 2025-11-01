@@ -5,10 +5,10 @@ namespace Halloween2025.Towers.PlagueDoctor.Levels;
 
 public class Level13 : HeroLevel
 {
+    public override string Description => "Plague bringer ability charges 17% faster.";
+
     public override void ApplyUpgrade(TowerModel towerModel)
     {
         towerModel.GetAbility(1).cooldown = 50;
     }
-
-    public override string Description => "Plague bringer ability charges 17% faster.";
 }

@@ -9,6 +9,9 @@ namespace Halloween2025.Towers.PlagueDoctor.Levels;
 
 public class Level16 : HeroLevel
 {
+    public override string Description =>
+        "Mega plague does 50% more DPS. Fray's projectiles now also apply this mega plague.";
+
     public override void ApplyUpgrade(TowerModel towerModel)
     {
         towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].GetDescendant<DamageOverTimeModel>()
@@ -20,9 +23,8 @@ public class Level16 : HeroLevel
             towerModel.GetAbility().GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile
                 .GetBehavior<AddBehaviorToBloonModel>();
         frayAddBehaviors.RemoveBehavior<DamageOverTimeModel>();
-        frayAddBehaviors.AddBehavior(towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().GetDescendant<DamageOverTimeModel>().Duplicate());
+        frayAddBehaviors.AddBehavior(towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>()
+            .GetDescendant<DamageOverTimeModel>().Duplicate());
         frayAddBehaviors.ApplyOverlay<MegaPoison>();
     }
-
-    public override string Description => "Mega plague does 50% more DPS. Fray's projectiles now also apply this mega plague.";
 }

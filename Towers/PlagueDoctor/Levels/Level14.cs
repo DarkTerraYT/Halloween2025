@@ -8,12 +8,12 @@ namespace Halloween2025.Towers.PlagueDoctor.Levels;
 
 public class Level14 : HeroLevel
 {
+    public override string Description => "Plague does 5 extra Damage/tick and the mega plague spawns two bloons.";
+
     public override void ApplyUpgrade(TowerModel towerModel)
     {
         towerModel.GetWeapon().projectile.GetBehavior<AddBehaviorToBloonModel>().GetBehavior<DamageOverTimeModel>()
             .damage += 5;
         towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().lifespan = 1.95f;
     }
-
-    public override string Description => "Plague does 5 extra Damage/tick and the mega plague spawns two bloons.";
 }

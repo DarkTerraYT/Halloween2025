@@ -1,10 +1,7 @@
 ﻿using BTD_Mod_Helper.Api.Display;
-using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
 using Il2Cpp;
-using Il2CppAssets.Scripts.Data.Behaviors.Resources;
 using Il2CppAssets.Scripts.Models.GenericBehaviors;
-using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
@@ -19,7 +16,7 @@ public class FreezeRotation : MonoBehaviour
 {
     public Vector3 rotation = new(-90, 0, 90);
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         transform.rotation = Quaternion.Euler(rotation);
     }
@@ -27,6 +24,9 @@ public class FreezeRotation : MonoBehaviour
 
 public class PlagueDoctorLevel1 : ModTowerCustomDisplay<global::Halloween2025.Towers.PlagueDoctor.PlagueDoctor>
 {
+    public override string AssetBundleName => "halloween2025";
+    public override string PrefabName => "PlagueDoctor";
+
     public override bool UseForTower(params int[] tiers)
     {
         return tiers[0] < 7;
@@ -50,17 +50,18 @@ public class PlagueDoctorLevel1 : ModTowerCustomDisplay<global::Halloween2025.To
             }
         }
     }
-
-    public override string AssetBundleName => "halloween2025";
-    public override string PrefabName => "PlagueDoctor";
 }
+
 public class PlagueDoctorLevel7 : ModTowerCustomDisplay<global::Halloween2025.Towers.PlagueDoctor.PlagueDoctor>
 {
+    public override string AssetBundleName => "halloween2025";
+    public override string PrefabName => "PlagueDoctor2";
+
     public override bool UseForTower(params int[] tiers)
     {
         return tiers[0] >= 7 && tiers[0] < 11;
     }
-    
+
     public override void ModifyDisplayNode(UnityDisplayNode node)
     {
         foreach (var renderer in node.GetMeshRenderers())
@@ -71,10 +72,7 @@ public class PlagueDoctorLevel7 : ModTowerCustomDisplay<global::Halloween2025.To
                 case "TopHat":
                     break;
                 case "Robe":
-                    foreach (var material in renderer.materials)
-                    {
-                        material.ApplyOutlineShader();
-                    }
+                    foreach (var material in renderer.materials) material.ApplyOutlineShader();
                     break;
                 case "BeltBuckle":
                     renderer.SetOutlineColor(new Color32(39, 25, 12, 255));
@@ -88,12 +86,13 @@ public class PlagueDoctorLevel7 : ModTowerCustomDisplay<global::Halloween2025.To
             }
         }
     }
-
-    public override string AssetBundleName => "halloween2025";
-    public override string PrefabName => "PlagueDoctor2";
 }
+
 public class PlagueDoctorLevel11 : ModTowerCustomDisplay<global::Halloween2025.Towers.PlagueDoctor.PlagueDoctor>
 {
+    public override string AssetBundleName => "halloween2025";
+    public override string PrefabName => "PlagueDoctor3";
+
     public override bool UseForTower(params int[] tiers)
     {
         return tiers[0] >= 11 && tiers[0] < 20;
@@ -119,20 +118,18 @@ public class PlagueDoctorLevel11 : ModTowerCustomDisplay<global::Halloween2025.T
                     renderer.SetOutlineColor(new Color(0.85f, 0.85f, 0.85f));
                     break;
                 case "Robe":
-                    foreach (var material in renderer.materials)
-                    {
-                        material.ApplyOutlineShader();
-                    }
+                    foreach (var material in renderer.materials) material.ApplyOutlineShader();
                     break;
             }
         }
     }
-
-    public override string AssetBundleName => "halloween2025";
-    public override string PrefabName => "PlagueDoctor3";
 }
+
 public class PlagueDoctorLevel20 : ModTowerCustomDisplay<global::Halloween2025.Towers.PlagueDoctor.PlagueDoctor>
 {
+    public override string AssetBundleName => "halloween2025";
+    public override string PrefabName => "PlagueDoctor4";
+
     public override bool UseForTower(params int[] tiers)
     {
         return tiers[0] >= 20;
@@ -161,17 +158,11 @@ public class PlagueDoctorLevel20 : ModTowerCustomDisplay<global::Halloween2025.T
                     renderer.gameObject.AddComponent<FreezeRotation>();
                     break;
                 case "Robe":
-                    foreach (var material in renderer.materials)
-                    {
-                        material.ApplyOutlineShader();
-                    }
+                    foreach (var material in renderer.materials) material.ApplyOutlineShader();
                     break;
             }
         }
     }
-
-    public override string AssetBundleName => "halloween2025";
-    public override string PrefabName => "PlagueDoctor4";
 }
 
 public class Needle : ModDisplay
@@ -192,10 +183,7 @@ public class Poison : ModBloonOverlay
     public override void ModifyDisplayNode(UnityDisplayNode node)
     {
         node.gameObject.DestroyAllChildren();
-        if (node.gameObject.HasComponent<SpriteRenderer>())
-        {
-            node.gameObject.RemoveComponent<SpriteRenderer>();
-        }
+        if (node.gameObject.HasComponent<SpriteRenderer>()) node.gameObject.RemoveComponent<SpriteRenderer>();
         switch (OverlayClass)
         {
             case BloonOverlayClass.Moab:
@@ -222,7 +210,7 @@ public class Poison : ModBloonOverlay
 
         node.genericRendererLayers = new Il2CppStructArray<int>(1);
         node.genericRenderers = new Il2CppReferenceArray<Renderer>([node.GetComponentInChildren<Renderer>()]);
-        
+
         node.RecalculateGenericRenderers();
     }
 }
@@ -232,14 +220,16 @@ public class PlagueBloon : ModCustomDisplay
     public override string AssetBundleName => "halloween2025";
     public override string PrefabName => Name;
 
-    public override Il2CppAssets.Scripts.Simulation.SMath.Vector3 PositionOffset => new Il2CppAssets.Scripts.Simulation.SMath.Vector3(0, 0, 10);
+    public override Il2CppAssets.Scripts.Simulation.SMath.Vector3 PositionOffset => new(0, 0, 10);
+
+    public override DisplayCategory DisplayCategory => DisplayCategory.Bloon;
+
     public override void ModifyDisplayNode(UnityDisplayNode node)
     {
         node.GetRenderer<SpriteRenderer>().flipY = true;
     }
-
-    public override DisplayCategory DisplayCategory => DisplayCategory.Bloon;
 }
+
 public class MegaPoison : ModBloonOverlay
 {
     public override string BaseOverlay =>
@@ -248,10 +238,7 @@ public class MegaPoison : ModBloonOverlay
     public override void ModifyDisplayNode(UnityDisplayNode node)
     {
         node.gameObject.DestroyAllChildren();
-        if (node.gameObject.HasComponent<SpriteRenderer>())
-        {
-            node.gameObject.RemoveComponent<SpriteRenderer>();
-        }
+        if (node.gameObject.HasComponent<SpriteRenderer>()) node.gameObject.RemoveComponent<SpriteRenderer>();
         switch (OverlayClass)
         {
             case BloonOverlayClass.Moab:
@@ -278,7 +265,7 @@ public class MegaPoison : ModBloonOverlay
 
         node.genericRendererLayers = new Il2CppStructArray<int>(1);
         node.genericRenderers = new Il2CppReferenceArray<Renderer>([node.GetComponentInChildren<Renderer>()]);
-        
+
         node.RecalculateGenericRenderers();
     }
 }

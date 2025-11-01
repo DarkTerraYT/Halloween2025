@@ -12,4 +12,3 @@ public static class ModHelperData
     public const string RepoName = "Halloween2025";
     public const string Author = "LerpMcGerk";
 }
-    
