@@ -1,1 +1,1 @@
-Make a patch not make vanilla content not work at all
+Make Retribution (005 Ghost Monkey) not cost 800 dollars and the proper 100k

@@ -12,7 +12,7 @@ public class Retribution : ModUpgrade<GhostMonkey>
 
     public override int Path => Bottom;
     public override int Tier => 5;
-    public override int Cost => 820;
+    public override int Cost => 105000;
 
     public override void ApplyUpgrade(TowerModel towerModel)
     {
